@@ -34,12 +34,13 @@ router.post(
 );
 
 router.delete(
-  "/:reivewId",
+  "/:reviewId",
   catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     await Campground.findByIdAndUpdate(id, {
       $pull: { reviews: reviewId },
     });
+    console.log(req.params);
     await Review.findByIdAndDelete(reviewId);
     req.flash("success", "Successfully delete a review");
     res.redirect(`/campgrounds/${id}`);
